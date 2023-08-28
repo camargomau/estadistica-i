@@ -6,5 +6,6 @@
 *.ind
 *.log
 *.out
+*.toc
 *.synctex.gz
 
