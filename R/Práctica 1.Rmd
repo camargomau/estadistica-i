@@ -1,0 +1,97 @@
+---
+title: "Introducción a R"
+output: pdf_document
+author: "Nombre(s) Apellidos"
+date: "Septiembre"
+---
+
+## Ejercicio 1.1 
+
+Elabora una tabla con tus datos personales. Toma en cuenta el siguiente ejemplo.
+
+|Nombre | Héctor Morales Osorio|
+|:-----|:------|
+|Licenciatura|Actuaría|
+|Correo|888745@pcpuma.acatlan.mx|
+|Letra griega|$\Omega$|
+
+
+## Ejercicio 1.2
+
+Consulta la documentación de la función `plot` de la base de R, presenta un 
+ejemplo y comenta el código.
+
+```{r}
+# Tu código va aquí
+```
+
+## Ejercicio 1.3
+
+a) ¿Cuántos días hay entre la fecha de la primera y última clase del semestre 2024-1?
+
+```{r}
+# Tu código va aquí
+```
+
+
+b) Para una fecha histórica, obtén el día de la semana de este evento y en los comentarios menciona qué acontecimiento ocurrió en la fecha elegida.
+
+```{r}
+# Tu código va aquí
+```
+
+## Ejercicio 1.4
+
+a) Crea un data.frame llamado `figuras` que tenga las siguientes columnas: 
+- `Circunferencia` = c(8.3, 8.6, 8.8, 10.5, 10.7, 10.8, 11.0)
+- `Altura` = c(70, 65, 63, 72, 81, 83, 66)
+- `Volumen` = c(10,3, 10,3, 10,2, 16,4, 18,8, 19,7, 15,6)
+
+```{r}
+# Tu código va aquí
+```
+
+
+b) Extrae la tercera observación (es decir, la tercera fila).
+
+```{r}
+# Tu código va aquí
+```
+
+c) Extrae la columna `Circunferencia`.
+
+```{r}
+# Tu código va aquí
+```
+
+d) Crea un nuevo obejeto con todas las observaciones excepto la cuarta. (Es 
+decir, elimina la cuarta observación/fila).
+
+```{r}
+# Tu código va aquí
+```
+
+
+
+## Ejercicio 1.5
+
+a) Imprime todos los elementos del Dataframe `figuras` por filas.
+
+```{r}
+# Tu código va aquí
+```
+
+
+b) Imprime todos los elementos del Dataframe `figuras` por columnas.
+
+```{r}
+# Tu código va aquí
+```
+
+## Ejercicio 1.6
+
+Crea una función que se llame `LanzarDado` que simule el lanzamiento de un dado e imprima el número de puntos de lanzamiento y ejecuta la línea  `LanzarDado(n = 10)`
+
+```{r}
+# Tu código va aquí
+```
