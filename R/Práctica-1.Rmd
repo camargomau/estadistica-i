@@ -3,6 +3,7 @@ title: "Introducción a R"
 output: pdf_document
 author: "Luis Mauricio Camargo Badillo"
 date: "18 de septiembre de 2023"
+linestretch: 1.5
 ---
 
 ## Ejercicio 1.1
