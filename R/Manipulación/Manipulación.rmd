@@ -1,0 +1,93 @@
+---
+title: "Introducción a R"
+output: pdf_document
+author: "Luis Mauricio Camargo Badillo"
+date: "23 de octuble de 2023"
+linestretch: 1.5
+---
+
+# Introducción a R
+
+## Ejercicio 0
+
+Sumar 2+2:
+
+```{r}
+2+2
+```
+
+Raíz cuadrada de 10:
+
+```{r}
+sqrt(10)
+```
+
+## Ejercicio 1
+
+Página de ayuda de `read_csv()`:
+
+```{r message=FALSE}
+library(tidyverse)
+?read_csv()
+```
+
+Leer la información de los nombres de bebés y asignarla a `baby_names`:
+
+```{r message=FALSE}
+baby_names <- read_csv("Datos/babyNames.csv")
+```
+
+Guardar `baby_names` como un data set de R en un archivo `babynames.rds`:
+
+```{r}
+write_rds(baby_names, file = "Datos/babynames.rds")
+```
+
+# Ejercicio 2.1
+
+Usar `filter()` para extraer los datos de mi nombre (Mauricio):
+
+```{r}
+baby_names_mauricio <- filter(baby_names, Name == "Mauricio")
+```
+
+Ordenar los datos del paso anterior según `Count`:
+
+```{r}
+arrange(baby_names_mauricio, desc(Count))
+```
+
+Filtrar los datos, extrayendo solo la fila que contiene el nombre más popular para niños en 1999:
+
+```{r}
+baby_names_boys <- filter(baby_names, Sex == "Boys" & Year == 1999)
+filter(baby_names_boys, Count == max(Count))
+```
+
+# Ejercicio 2.2
+
+```{r}
+baby_names %>% filter(Name == "Mauricio") %>% arrange(desc(Count))
+```
+
+# Ejercicio 3
+
+No hace falta volver a extraer los datos correspondientes a mi nombre.
+
+Graficar los datos correspondientes a mi nombre, con `Year` en las abscisas y `Count` en las ordenadas:
+
+```{r}
+qplot(x = Year, y = Count, data = baby_names_mauricio)
+```
+
+Ajustando la gráfica para mostrar a niños y niñas con diferentes colores:
+
+```{r}
+qplot(x = Year, y = Count, color = Sex, data = baby_names_mauricio)
+```
+
+En la gráfica, utilizar líneas en lugar de puntos:
+
+```{r}
+qplot(x = Year, y = Count, color = Sex, data = baby_names_mauricio, geom = "line")
+```
