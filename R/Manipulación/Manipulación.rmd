@@ -1,9 +1,8 @@
 ---
-title: "Introducción a R"
+title: "Manipulación y Gráficas en R"
 output: pdf_document
 author: "Luis Mauricio Camargo Badillo"
 date: "23 de octuble de 2023"
-linestretch: 1.5
 ---
 
 # Introducción a R
@@ -26,14 +25,14 @@ sqrt(10)
 
 Página de ayuda de `read_csv()`:
 
-```{r message=FALSE}
+```{r message = FALSE}
 library(tidyverse)
 ?read_csv()
 ```
 
 Leer la información de los nombres de bebés y asignarla a `baby_names`:
 
-```{r message=FALSE}
+```{r message = FALSE}
 baby_names <- read_csv("Datos/babyNames.csv")
 ```
 
@@ -76,7 +75,7 @@ No hace falta volver a extraer los datos correspondientes a mi nombre.
 
 Graficar los datos correspondientes a mi nombre, con `Year` en las abscisas y `Count` en las ordenadas:
 
-```{r}
+```{r, warning = FALSE}
 qplot(x = Year, y = Count, data = baby_names_mauricio)
 ```
 
@@ -126,7 +125,7 @@ qplot(x = Year, y = Proportion, colour = Sex, data = baby_names_popular, geom = 
 
 # Ejercicio 5
 
-Filtrar lros datos `baby_names`, conservando únicamente los 10 nombres más populares para niñas y niños en cada año:
+Filtrar los datos `baby_names`, conservando únicamente los 10 nombres más populares para niñas y niños en cada año:
 
 ```{r}
 baby_names_top10 <- baby_names %>% group_by(Year, Sex) %>% filter(Rank <= 10)
@@ -136,7 +135,7 @@ baby_names_top10
 
 Resumir los datos del paso anterior para calcular la proporción total `TotalProportion` de niñas y niños con nombres en el top 10:
 
-```{r}
+```{r, message = FALSE}
 baby_names_top10_proportion <- baby_names_top10 %>% summarise(TotalProportion = sum(Proportion))
 
 baby_names_top10_proportion
@@ -146,4 +145,150 @@ Graficar los datos del paso anterior, con `Year` en las abscisas y `TotalProport
 
 ```{r}
 qplot(x = Year, y = TotalProportion, colour = Sex, data = baby_names_top10_proportion, geom = "line")
+```
+
+# Gráficas en R
+
+## Ejercicio 0
+
+Almacenar los datos en `dat`:
+
+```{r message = FALSE}
+dat <- read_csv("Datos/EconomistData.csv")
+```
+
+Crear una gráfica de dispersión con `CPI` en las abscisas y `HDI` en las ordenadas:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point()
+```
+
+Colorear en azul los puntos de la gráfica anterior:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point(colour = "blue")
+```
+
+Asignar un color a los puntos según `Region`:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point(aes(colour = Region))
+```
+
+Manteniendo el color según `Region`, agranadr los puntos asignándoles un tamaño de 2:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point(aes(colour = Region), size = 2)
+```
+
+Manteniendo el color según `Region`, asignar un tamaño según `HDI.Rank`:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point(aes(colour = Region, size = HDI.Rank))
+```
+
+## Ejercicio 1
+
+Recrear la gráfica de dispersión con `CPI` en las abscisas y `HDI` en las ordenadas, tal como en el ejercicio anterior:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point()
+```
+
+Superponer una línea de suavizado sobre la gráfica de dispersión, utilizando `geom_smooth()`:
+
+```{r, message = FALSE}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point() + geom_smooth()
+```
+
+Hacer la línea de suavizado menos suave:
+
+```{r, message = FALSE}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point() + geom_smooth(span = 0.5)
+```
+
+Cambiar la línea de suavizado para que utilize un modelo linear para las predicciones:
+
+```{r, message = FALSE}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point() + geom_smooth(span = 0.5, method = "lm")
+```
+
+Permitir que la línea de suavizado del paso anterior varíe a través de los niveles de `Region`:
+
+```{r, message = FALSE}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI, colour = Region, fill = Region)) + geom_point() + geom_smooth(span = 0.5, method = "lm")
+```
+
+Sobreponer una línea de suavizado LOESS sobre la gráfica de dispersión utilizando `geom_line()`:
+
+```{r, message = FALSE}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) + geom_point() + geom_line(stat = "smooth", method = "loess")
+```
+
+# Ejercicio 2
+
+Crear una gráfica de dispersión con `CPI` en las abscisas y `HDI` en las ordenadas. Colorear los puntos para indicar `Region`:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI, colour = Region)) + geom_point()
+```
+
+Modificar las escalas de las abscisas, ordenadas y los colores para que tengan nombres más entendibles:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI, colour = Region)) + geom_point() + scale_x_continuous(name = "Índice de Percepción de Corrupción (CPI)") + scale_y_continuous(name = "Índice de Desarrollo Humano (HDI)") + scale_colour_discrete(name = "Región")
+```
+
+Modificar la escala de colores para que utilice valores específicos de mi elección:
+
+```{r}
+ggplot(data = dat, mapping = aes(x = CPI, y = HDI, colour = Region)) + geom_point() + scale_x_continuous(name = "Índice de Percepción de Corrupción (CPI)") + scale_y_continuous(name = "Índice de Desarrollo Humano (HDI)") + scale_colour_manual(name = "Región", values = c("red", "magenta", "blue", "grey", "green", "orange"))
+```
+
+# Ejercicio 3
+
+Crear una gráfica de dispersión con `area` en las abscisas y el logaritmo de `poptotal` en las ordenadas:
+
+```{r}
+ggplot(data = midwest, mapping = aes(x = area, y = log(poptotal))) + geom_point()
+```
+
+Dentro de la llamada a `geom_call()`, asignar color según `state`, asignar tamaño según el logaritmo de `popdensity` y fijar la transparencia (`alpha`) en 0.3:
+
+```{r}
+scatter <- ggplot(data = midwest, mapping = aes(x = area, y = log(poptotal))) + geom_point(aes(colour = state, size = log(popdensity)), alpha = 0.3)
+
+scatter
+```
+
+Agregar una línea de suavizado y desactivar la graficación del intervalo de confianza:
+
+```{r, message = FALSE}
+scatter_smoothed <- scatter + geom_smooth(se = FALSE)
+
+scatter_smoothed
+```
+
+Facetar la gráfica según `state`. Poner `facet_wrap()` en el argumento `scales` para permitir rangos separados en las abscisas:
+
+```{r, message = FALSE}
+scatter_faceted <- scatter_smoothed + facet_wrap(~ state, scales = "free_x")
+
+scatter_faceted
+```
+
+Cambiar la escala de colores por defecto para utilizar la paleta discreta `RColorBrewer` llamada `Set1`:
+
+```{r, message = FALSE}
+scatter_faceted_colour <- scatter_faceted + scale_colour_brewer(palette = "Set1")
+
+scatter_faceted_colour
+```
+
+Cambiar el tema por defecto a `theme_bw()` y mofificarlo para que el título del eje sea azul en negritas y el fondo del nombre de la faceta sea amarillo.
+
+```{r, message = FALSE}
+scatter_faceted_themed <- scatter_faceted_colour + theme_bw() + theme(axis.title = element_text(colour = "blue", face = "bold"), strip.background = element_rect(fill = "yellow"))
+
+scatter_faceted_themed
 ```
