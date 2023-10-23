@@ -42,7 +42,7 @@ Guardar `baby_names` como un data set de R en un archivo `babynames.rds`:
 write_rds(baby_names, file = "Datos/babynames.rds")
 ```
 
-# Ejercicio 2.1
+## Ejercicio 2.1
 
 Usar `filter()` para extraer los datos de mi nombre (Mauricio):
 
@@ -63,13 +63,13 @@ baby_names_boys <- filter(baby_names, Sex == "Boys" & Year == 1999)
 filter(baby_names_boys, Count == max(Count))
 ```
 
-# Ejercicio 2.2
+## Ejercicio 2.2
 
 ```{r}
 baby_names %>% filter(Name == "Mauricio") %>% arrange(desc(Count))
 ```
 
-# Ejercicio 3
+## Ejercicio 3
 
 No hace falta volver a extraer los datos correspondientes a mi nombre.
 
@@ -92,7 +92,7 @@ qplot(x = Year, y = Count, colour = Sex,
 	data = baby_names_mauricio, geom = "line")
 ```
 
-# Ejercicio 4
+## Ejercicio 4
 
 Utilizar `mutate()` y `group_by()` para crear una columna `Proportion` donde `Proportion = Count/sum(Count)` para cada grupo `Year X Sex`:
 
@@ -134,7 +134,7 @@ qplot(x = Year, y = Proportion, colour = Sex,
 	data = baby_names_popular, geom = "line")
 ```
 
-# Ejercicio 5
+## Ejercicio 5
 
 Filtrar los datos `baby_names`, conservando únicamente los 10 nombres más populares para niñas y niños en cada año:
 
@@ -253,7 +253,7 @@ ggplot(data = dat, mapping = aes(x = CPI, y = HDI)) +
 	geom_point() + geom_line(stat = "smooth", method = "loess")
 ```
 
-# Ejercicio 2
+## Ejercicio 2
 
 Crear una gráfica de dispersión con `CPI` en las abscisas y `HDI` en las ordenadas. Colorear los puntos para indicar `Region`:
 
@@ -285,7 +285,7 @@ ggplot(data = dat, mapping = aes(x = CPI, y = HDI, colour = Region)) +
 			"grey", "green", "orange"))
 ```
 
-# Ejercicio 3
+## Ejercicio 3
 
 Crear una gráfica de dispersión con `area` en las abscisas y el logaritmo de `poptotal` en las ordenadas:
 
