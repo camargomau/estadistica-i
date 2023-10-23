@@ -1,1 +1,1 @@
-# LaTeX assignments for Estadística I
+# Assignments for Estadística I
